@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\RegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Auth;
 
 class RegisterController extends Controller
 {
@@ -25,7 +26,9 @@ class RegisterController extends Controller
 
         DB::commit();
 
-        return back()->with('success', 'Registerion successful, proceed to Login!');
+        Auth::login($user);
+
+        return redirect(route('rule.index'))->with('success', 'Welcome to customer alert!');
 
     }
 }
