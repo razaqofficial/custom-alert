@@ -20,7 +20,6 @@
             }
         </style>
         <script src="{{ asset('jquery.min.js') }}"></script>
-        <script id="alert" src="{{ asset('task.js?id=1') }}"></script>
     </head>
     <body class="antialiased">
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 sm:items-center sm:pt-0">
