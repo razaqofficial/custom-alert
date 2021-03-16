@@ -12,8 +12,8 @@ class RuleController extends Controller
 {
     public function index()
     {
-        $rules = Rule::all();
-        return view('index', compact('rules'));
+        
+        return view('index');
     }
 
     /**
