@@ -30,6 +30,7 @@
             <div class="container">
                 @include('includes.alert')
                <div class="row">
+                   <h4>User ID ({{ auth()->user()->id }})</h4>
                    <div class="col-12">
                        <h3>Add Rule</h3>
                        <form action="{{ route('rule.create') }}" method="post">

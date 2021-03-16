@@ -22,10 +22,9 @@ Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function() {
    Route::post('register', 'RegisterController@register')->name('register');
 });
 
-Route::group(['middleware' => 'auth', 'as' => 'rule.', 'prefix' => 'rule'], function() {
-
+Route::group(['middleware' => 'auth', 'as' => 'rule.'], function() {
     Route::get('', 'RuleController@index')->name('index');
-    Route::post('create', 'RuleController@create')->name('create');
-    Route::get('user/{user}', 'RuleController@getUserRules');
+    Route::post('rule/create', 'RuleController@create')->name('create');
+    Route::get('rule/user/{user}', 'RuleController@getUserRules');
 });
 

@@ -15,8 +15,8 @@ class CreateRuleUserTable extends Migration
     {
         Schema::create('rule_user', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('rule_id')->constrained();
+            $table->foreignUuid('user_id')->constrained();
+            $table->foreignUuid('rule_id')->constrained();
             $table->string('alert_message');
             $table->string('query_string');
             $table->boolean('display');
