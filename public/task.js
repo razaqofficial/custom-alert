@@ -2,7 +2,7 @@ $(document).ready(function() {
     var scriptTag = $("#alert").attr('src');
     var params = scriptTag.split('=')[1]
     $.ajax({
-        url: '/rule/user/' + params,
+        url: 'https://poptin-task.herokuapp.com/rule/user/' + params,
         type:"get",
         success:function(data) {
             if (data.rules.length > 0) {

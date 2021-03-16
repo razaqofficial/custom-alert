@@ -19,8 +19,6 @@
                 font-family: 'Nunito', sans-serif;
             }
         </style>
-        <script src="{{ asset('jquery.min.js') }}"></script>
-        <script id="alert" src="{{ asset('task.js?id=f098f10f-ed78-4f73-9184-f6a82091f43c') }}"></script>
     </head>
     <body class="antialiased">
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 sm:items-center sm:pt-0">
@@ -32,7 +30,8 @@
                <div class="row">
                    <h4>User ID ({{ auth()->user()->id }})</h4>
                    <div class="col-12">
-                       <span>Download File <a class="btn btn-link" href="{{ route('rule.download.js') }}"><u>Click here</u></a> </span>
+                       <p>Download Task File <a class="btn btn-link" href="{{ route('rule.download.js', ['file' => 'task']) }}"><u>Click here</u></a> </p>
+                       <p>Download Jquery File <a class="btn btn-link" href="{{ route('rule.download.js', ['file' => 'jquery']) }}"><u>Click here</u></a> </p>
                        <h3>Add Rule</h3>
                        <form action="{{ route('rule.create') }}" method="post">
                            @csrf

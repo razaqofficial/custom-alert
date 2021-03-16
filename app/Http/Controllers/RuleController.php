@@ -55,8 +55,12 @@ class RuleController extends Controller
         return back()->with('success', 'Rule deleted successfully');
     }
 
-    public function downloadJsFile()
+    /**
+     * @param Request $request
+     */
+    public function downloadJsFile(Request $request)
     {
-        return response()->download(public_path('task.js'));
+        $file = $request->file == 'task' ? 'task.js' : 'jquery.min.js';
+        return response()->download(public_path($file));
     }
 }

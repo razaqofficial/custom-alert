@@ -30,7 +30,7 @@ Route::group(['middleware' => 'auth', 'as' => 'rule.', 'prefix'=>'rule'], functi
     Route::post('create', 'RuleController@create')->name('create');
     Route::get('user/{user}', 'RuleController@getUserRules');
     Route::get('delete/{rule}', 'RuleController@delete')->name('delete');
-    Route::get('download-js', 'RuleController@downloadJsFile')->name('download.js');
+    Route::get('download-js/{file}', 'RuleController@downloadJsFile')->name('download.js');
 
 });
 
