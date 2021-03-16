@@ -13,17 +13,6 @@ class User extends Authenticatable
     use HasFactory, Notifiable, UUID;
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
-
-    /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
@@ -35,14 +24,6 @@ class User extends Authenticatable
 
     public function rules()
     {
-        return $this->belongsToMany(Rule::class)
-            ->withPivot('alert_message', 'query_string', 'display');
-    }
-
-    public function showOnRules()
-    {
-        return $this->belongsToMany(Rule::class)
-            ->wherePivot('display', 1)
-            ->withPivot('alert_message', 'query_string', 'display');
+        return $this->hasMany(Rule::class);
     }
 }

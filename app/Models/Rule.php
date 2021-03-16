@@ -10,9 +10,8 @@ class Rule extends Model
 {
     use HasFactory, UUID;
 
-    public function users()
+    public function user()
     {
-        return $this->belongsToMany(User::class)
-            ->withPivot('alert_message', 'query_string', 'display');
+        return $this->belongsTo(User::class);
     }
 }

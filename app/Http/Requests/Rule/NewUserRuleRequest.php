@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Rule;
 
+use App\Enums\RuleType;
+use BenSampo\Enum\Rules\EnumValue;
 use Illuminate\Foundation\Http\FormRequest;
 
 class NewUserRuleRequest extends FormRequest
@@ -33,8 +35,8 @@ class NewUserRuleRequest extends FormRequest
     public function rules()
     {
         return [
+            'name' => ['required', new EnumValue(RuleType::class)],
             'display' =>'required|in:1,0',
-            'rule_id' => 'required|exists:rules,id',
             'alert_message' => 'required',
             'query_string' => 'required'
         ];

@@ -6,6 +6,7 @@ use App\Http\Requests\Rule\NewUserRuleRequest;
 use App\Models\Rule;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RuleController extends Controller
 {
@@ -21,11 +22,17 @@ class RuleController extends Controller
      */
     public function create(NewUserRuleRequest $request)
     {
-        $request->user()->rules()->attach($request->rule_id, [
-            'alert_message' => $request->alert_message,
-            'query_string' => $request->query_string,
-            'display' => $request->display,
-        ]);
+        DB::beginTransaction();
+
+        $rule = new Rule();
+        $rule->name = $request->name;
+        $rule->alert_message = $request->alert_message;
+        $rule->query_string = $request->query_string;
+        $rule->display = $request->display;
+        $rule->user()->associate($request->user());
+        $rule->save();
+
+        DB::commit();
 
         return back()->with('success', 'Rule added successfully');
     }
@@ -36,5 +43,20 @@ class RuleController extends Controller
             'message' => 'user rules',
             'rules' => $user->rules
         ]);
+    }
+
+    /**
+     * @param Rule $rule
+     */
+    public function delete(Rule $rule)
+    {
+        $rule->delete();
+
+        return back()->with('success', 'Rule deleted successfully');
+    }
+
+    public function downloadJsFile()
+    {
+        return response()->download(public_path('task.js'));
     }
 }

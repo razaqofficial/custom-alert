@@ -31,6 +31,7 @@
                <div class="row">
                    <h4>User ID ({{ auth()->user()->id }})</h4>
                    <div class="col-12">
+                       <span>Download File <a class="btn btn-link" href="{{ route('rule.download.js') }}"><u>Click here</u></a> </span>
                        <h3>Add Rule</h3>
                        <form action="{{ route('rule.create') }}" method="post">
                            @csrf
@@ -42,10 +43,11 @@
                                    </select>
                                </div>
                                <div class="col-3">
-                                   <select name="rule_id" class="form-control" required>
-                                       @foreach($rules as $rule)
-                                        <option value="{{ $rule->id }}">{{ $rule->name }}</option>
-                                       @endforeach
+                                   <select name="name" class="form-control" required>
+                                        <option value="pages that contains">pages that contains</option>
+                                        <option value="a specific page">a specific page</option>
+                                        <option value="pages start with">pages start with</option>
+                                        <option value="pages ending with">pages ending with</option>
                                    </select>
                                </div>
                                <div class="col-2">
@@ -80,16 +82,16 @@
                                 @forelse(auth()->user()->rules as $rule)
                                     <tr>
                                         <td>{{ $loop->iteration  }}</td>
-                                        <td>{{ $rule->pivot->display ? 'Show on' : 'Don\'t show on' }}</td>
+                                        <td>{{ $rule->display ? 'Show on' : 'Don\'t show on' }}</td>
                                         <td>{{ $rule->name }}</td>
-                                        <td>{{ $rule->pivot->alert_message }}</td>
-                                        <td>{{ $rule->pivot->query_string }}</td>
-                                        <td><a href="#" class="btn btn-info" >Delete</a></td>
+                                        <td>{{ $rule->alert_message }}</td>
+                                        <td>{{ $rule->query_string }}</td>
+                                        <td><a href="{{ route('rule.delete', $rule)  }}" class="btn btn-danger" >Delete</a></td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="4">
-                                            <button class="btn btn-default btn-block">No rules found</button>
+                                        <td colspan="6">
+                                            <button class="btn btn-default btn-block">No rule found</button>
                                         </td>
                                     </tr>
                                 @endforelse
