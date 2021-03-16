@@ -23,14 +23,24 @@ Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function() {
 });
 
 Route::get('', function() {
-    return redirect(route('rule.index'));
+    return redirect(route('alert.index'));
 });
-Route::group(['middleware' => 'auth', 'as' => 'rule.', 'prefix'=>'rule'], function() {
-    Route::get('', 'RuleController@index')->name('index');
-    Route::post('create', 'RuleController@create')->name('create');
-    Route::get('user/{user}', 'RuleController@getUserRules');
-    Route::get('delete/{rule}', 'RuleController@delete')->name('delete');
-    Route::get('download-js/{file}', 'RuleController@downloadJsFile')->name('download.js');
+
+
+Route::group(['middleware' => 'auth'], function() {
+
+    Route::group(['as' => 'alert.', 'prefix'=>'alert'], function() {
+        Route::get('', 'AlertController@index')->name('index');
+        Route::post('create', 'AlertController@create')->name('create');
+        Route::get('details/{alert}', 'AlertController@details')->name('details');
+        Route::get('delete/{alert}', 'AlertController@delete')->name('delete');
+    });
+
+    Route::group(['as' => 'rule.', 'prefix'=>'rule'], function() {
+        Route::post('create/{alert}', 'RuleController@create')->name('create');
+        Route::get('user/{user}', 'RuleController@getUserRules');
+        Route::get('delete/{rule}', 'RuleController@delete')->name('delete');
+    });
 
 });
 

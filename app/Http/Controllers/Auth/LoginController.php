@@ -25,7 +25,7 @@ class LoginController extends Controller
     public function doLogin(LoginRequest $request)
     {
         if ($this->guard()->attempt($request->only('email', 'password'))) {
-            return redirect()->intended(route('rule.index'))->with('success', 'Welcome');
+            return redirect()->intended(route('alert.index'))->with('success', 'Welcome');
         }
 
         return back()->with('error', 'Invalid credentials');

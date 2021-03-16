@@ -3,33 +3,33 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Rule\NewUserRuleRequest;
+use App\Models\Alert;
 use App\Models\Rule;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use DB;
 
 class RuleController extends Controller
 {
     public function index()
     {
-        
+
         return view('index');
     }
 
     /**
      *
      * @param NewUserRuleRequest $request
+     * @param Alert $alert
      */
-    public function create(NewUserRuleRequest $request)
+    public function create(NewUserRuleRequest $request, Alert $alert)
     {
         DB::beginTransaction();
 
         $rule = new Rule();
         $rule->name = $request->name;
-        $rule->alert_message = $request->alert_message;
         $rule->query_string = $request->query_string;
         $rule->display = $request->display;
-        $rule->user()->associate($request->user());
+        $rule->alert()->associate($alert);
         $rule->save();
 
         DB::commit();
@@ -41,7 +41,7 @@ class RuleController extends Controller
     {
         return response()->json([
             'message' => 'user rules',
-            'rules' => $user->rules()->showOn()->get()
+            'rules' => $user->rules()->showOn()->with('alert')->get()
         ]);
     }
 
@@ -50,17 +50,13 @@ class RuleController extends Controller
      */
     public function delete(Rule $rule)
     {
+        DB::beginTransaction();
+
         $rule->delete();
+
+        DB::commit();
 
         return back()->with('success', 'Rule deleted successfully');
     }
 
-    /**
-     * @param Request $request
-     */
-    public function downloadJsFile(Request $request)
-    {
-        $file = $request->file == 'task' ? 'task.js' : 'jquery.min.js';
-        return response()->download(public_path($file));
-    }
 }

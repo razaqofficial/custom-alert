@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>Laravel</title>
 
@@ -19,7 +20,7 @@
                 font-family: 'Nunito', sans-serif;
             }
         </style>
-        <script id="alert" src="{{ asset('task.js?id=1') }}"></script>
+        {{--<script id="alert" src="{{ asset('task.js?id=2803d617-1f4b-4468-bef8-802e0143c15d') }}"> </script>--}}
     </head>
     <body class="antialiased">
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 sm:items-center sm:pt-0">
@@ -27,33 +28,16 @@
                 <a href="{{ route('logout') }}" class="text-sm text-gray-700 underline">Logout</a>
             </div>
             <div class="container">
-                @include('includes.alert')
+                @include('includes.notify')
                <div class="row">
                    <div class="col-12">
                        <p>Paste this in your code: &lt;script id="alert" src="http://poptin-task.herokuapp.com/task.js?id={{auth()->user()->id}}"&gt; &lt;/script&gt; </p>
-                       <h3>Add Rule</h3>
-                       <form action="{{ route('rule.create') }}" method="post">
+                       <h3>Add Alert</h3>
+                       <form action="{{ route('alert.create') }}" method="post">
                            @csrf
                            <div class="form-group row">
-                               <div class="col-2">
-                                   <select name="display" class="form-control" required>
-                                       <option value="1">Show on</option>
-                                       <option value="0">Don't Show on</option>
-                                   </select>
-                               </div>
-                               <div class="col-3">
-                                   <select name="name" class="form-control" required>
-                                        <option value="pages that contains">pages that contains</option>
-                                        <option value="a specific page">a specific page</option>
-                                        <option value="pages start with">pages start with</option>
-                                        <option value="pages ending with">pages ending with</option>
-                                   </select>
-                               </div>
-                               <div class="col-2">
+                               <div class="col-4">
                                    <input type="text" placeholder="Alert message" class="form-control" name="alert_message" required/>
-                               </div>
-                               <div class="col-3">
-                                   <input type="text" placeholder="Query string" class="form-control" name="query_string" required/>
                                </div>
                                <div class="col-2">
                                    <button type="submit" class="btn btn-info">Submit</button>
@@ -70,27 +54,26 @@
                                 <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Display</th>
-                                    <th>Rule  Name</th>
-                                    <th>Alert Message</th>
-                                    <th>Query string</th>
+                                    <th>Alert message</th>
+                                    <th>No. Of Rule</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @forelse(auth()->user()->rules as $rule)
+                                @forelse(auth()->user()->alerts as $alert)
                                     <tr>
                                         <td>{{ $loop->iteration  }}</td>
-                                        <td>{{ $rule->display ? 'Show on' : 'Don\'t show on' }}</td>
-                                        <td>{{ $rule->name }}</td>
-                                        <td>{{ $rule->alert_message }}</td>
-                                        <td>{{ $rule->query_string }}</td>
-                                        <td><a href="{{ route('rule.delete', $rule)  }}" class="btn btn-danger" >Delete</a></td>
+                                        <td>{{ $alert->alert_message }}</td>
+                                        <td>{{ $alert->rules()->count() }}</td>
+                                        <td>
+                                            <a href="{{ route('alert.details', $alert) }}" class="btn btn-info" >Details</a>
+                                            <a href="{{ route('alert.delete', $alert) }}" class="btn btn-danger" >Delete</a>
+                                        </td>
                                     </tr>
                                 @empty
                                     <tr>
                                         <td colspan="6">
-                                            <button class="btn btn-default btn-block">No rule found</button>
+                                            <button class="btn btn-default btn-block">No Alert found</button>
                                         </td>
                                     </tr>
                                 @endforelse

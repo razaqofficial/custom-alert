@@ -22,8 +22,13 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function alerts()
+    {
+        return $this->hasMany(Alert::class);
+    }
+
     public function rules()
     {
-        return $this->hasMany(Rule::class);
+        return $this->hasManyThrough(Rule::class, Alert::class);
     }
 }

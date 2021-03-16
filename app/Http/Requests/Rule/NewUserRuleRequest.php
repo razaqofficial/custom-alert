@@ -37,7 +37,6 @@ class NewUserRuleRequest extends FormRequest
         return [
             'name' => ['required', new EnumValue(RuleType::class)],
             'display' =>'required|in:1,0',
-            'alert_message' => 'required',
             'query_string' => 'required'
         ];
     }
