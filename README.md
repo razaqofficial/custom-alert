@@ -16,4 +16,4 @@ JQUERY >= v3.3.1
 
 # Dummy user
 - email: nhyatt@example.net
-- password: password
+- password: vgutmann@example.net

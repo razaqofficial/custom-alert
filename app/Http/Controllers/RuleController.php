@@ -41,7 +41,7 @@ class RuleController extends Controller
     {
         return response()->json([
             'message' => 'user rules',
-            'rules' => $user->rules
+            'rules' => $user->rules()->showOn()->get()
         ]);
     }
 
