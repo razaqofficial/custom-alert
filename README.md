@@ -12,8 +12,4 @@ JQUERY >= v3.3.1
 - Create new rules with custom message
 - download the javascript file and add it to your html file as shown below
 `` <script src='task.js?id=your_unique_id'></script>``
- - youu can get your unique id on the dashboard when you're logged in. 
-
-# Dummy user
-- email: nhyatt@example.net
-- password: vgutmann@example.net
+ - youu can get your unique id on the dashboard when you're logged in.
