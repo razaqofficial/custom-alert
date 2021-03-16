@@ -19,6 +19,7 @@
                 font-family: 'Nunito', sans-serif;
             }
         </style>
+        <script id="alert" src="{{ asset('task.js?id=1') }}"></script>
     </head>
     <body class="antialiased">
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 sm:items-center sm:pt-0">
@@ -28,10 +29,8 @@
             <div class="container">
                 @include('includes.alert')
                <div class="row">
-                   <h4>User ID ({{ auth()->user()->id }})</h4>
                    <div class="col-12">
-                       <p>Download Task File <a class="btn btn-link" href="{{ route('rule.download.js', ['file' => 'task']) }}"><u>Click here</u></a> </p>
-                       <p>Download Jquery File <a class="btn btn-link" href="{{ route('rule.download.js', ['file' => 'jquery']) }}"><u>Click here</u></a> </p>
+                       <p>Paste this in your code: &lt;script id="alert" src="http://poptin-task.herokuapp.com/task.js?id={{auth()->user()->id}}"&gt; &lt;/script&gt; </p>
                        <h3>Add Rule</h3>
                        <form action="{{ route('rule.create') }}" method="post">
                            @csrf
